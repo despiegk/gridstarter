@@ -97,21 +97,27 @@ if [[ -f "env.sh" ]]; then
     if [[ -d "/workspace" ]]
     then
         ln -sfv $PWD/env.sh /workspace/env.sh 
-        ln -sfv $PWD/env.sh $HOME/env.sh
     fi
 else
     curl https://raw.githubusercontent.com/despiegk/gridstarter/main/scripts/env.sh > $OURHOME/env.sh
     if [[ -d "/workspace" ]]
     then
         cp $OURHOME/env.sh /workspace/env.sh 
-        cp $OURHOME/env.sh $HOME/env.sh 
     fi
+    cp $OURHOME/env.sh $HOME/env.sh 
 fi
 
 bash -e $OURHOME/env.sh
 source $OURHOME/env.sh
 
 github_keyscan
+
+if [[ -z "${RESET}" ]]; then
+  echo
+else
+  rm -f $HOME/.vmodules/done_crystallib
+fi
+
 
 #CHECK IF DIR EXISTS, IF NOT CLONE
 if ! [[ -f "$HOME/.vmodules/done_crystallib" ]]; then
