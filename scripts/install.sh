@@ -100,7 +100,7 @@ if [[ -f "env.sh" ]]; then
         ln -sfv $PWD/env.sh $HOME/env.sh
     fi
 else
-    curl https://raw.githubusercontent.com/freeflowuniverse/crystaltools/$CLBRANCH/env.sh > $OURHOME/env.sh
+    curl https://raw.githubusercontent.com/despiegk/gridstarter/main/scripts/env.sh > $OURHOME/env.sh
     if [[ -d "/workspace" ]]
     then
         cp $OURHOME/env.sh /workspace/env.sh 
@@ -207,5 +207,5 @@ fi
 # clear
 # ct_help
 
-echo "**** INSTALL V & CRYSTAL LIB WAS OK ****"
+echo "**** INSTALL WAS OK ****"
 
