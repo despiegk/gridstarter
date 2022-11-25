@@ -131,6 +131,9 @@ if ! [[ -f "$HOME/.vmodules/done_crystallib" ]]; then
 
     crystal_lib_get
 
+    sed '/source ~\/env.sh/d' ~/.profile  > ~/.profile
+    echo 'source ~/env.sh' >> ~/.profile
+
     touch "$HOME/.vmodules/done_crystallib"
 fi
 
@@ -155,6 +158,11 @@ function v_install {
         fi
     fi
 
+        if [[ -z "${RESET}" ]]; then
+        echo
+        else
+        rm -rf $DIR_CODE_INT
+        fi
 
     if [[ -d "$DIR_CODE_INT/v" ]]; then
         pushd $DIR_CODE_INT/v
@@ -192,10 +200,16 @@ function v_install {
     fi
 }
 
+if [[ -z "${RESET}" ]]; then
+echo
+else
+rm -rf $DIR_CODE_INT
+fi
 
 if ! [ -x "$(command -v v)" ]; then
   v_install
 fi
+
 
 # pushd $DIR_CT
 # git pull
