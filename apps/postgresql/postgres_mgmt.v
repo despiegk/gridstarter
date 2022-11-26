@@ -8,10 +8,10 @@ import freeflowuniverse.gridstarter.appsbox as {AppBase}
 pub struct MyApp {
 	AppBase
 pub mut:
-	params Params
+	params_active ParamsActive
 }
 
-struct Params {
+struct ParamsActive {
 	name             string
 	tcp_port         int
 	db_path			 string
@@ -29,9 +29,9 @@ struct Params {
 // name:'mypostgresql'                 
 // nodes:'' #optional (nodes on which this needs to be executed)
 // dependencies:'' #optional (id's from action's which need to be run before this)
-pub fn get(params_str string)!MyApp {
+pub fn get(params params.Params)!MyApp {
 
-	mut params:=Params{
+	mut params:=ParamsActive{
 		tcp_port: params0.get_int_default("tcp.port", 0)
 		db_path: params0.get_default("db.path", "")
 		unixsocket_path: params0.get_default("unixsocket.path", "")
