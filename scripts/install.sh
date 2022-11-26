@@ -59,6 +59,22 @@ function crystal_lib_get {
     fi
 }
 
+function gridstarter_get {
+    mkdir -p $DIR_CODE/github/despiegk
+    if [[ -d "$DIR_CODE/github/despiegk/gridstarter" ]]
+    then
+        pushd $DIR_CODE/$2 2>&1 >> /dev/null
+        git pull
+        popd 2>&1 >> /dev/null
+    else
+        pushd $DIR_CODE/github/despiegk 2>&1 >> /dev/null
+        git clone --depth 1 --no-single-branch git@github.com:freeflowuniverse/gridstarter.git
+        popd 2>&1 >> /dev/null
+    fi
+}
+
+
+
 
 # function crystal_tools_get {
 #     mkdir -p $DIR_CODE/github/freeflowuniverse
@@ -130,6 +146,8 @@ if ! [[ -f "$HOME/.vmodules/done_crystallib" ]]; then
     mkdir -p ~/.vmodules/despiegk/    
 
     crystal_lib_get
+
+    gridstarter_get
 
     touch "$HOME/.vmodules/done_crystallib"
 fi
