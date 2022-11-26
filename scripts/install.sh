@@ -137,10 +137,13 @@ function v_install {
     fi
     popd "$@" > /dev/null
 
-    if ! [ -x "$(command -v v)" ]; then
+    if ! [ -x "$(command -v v)" ]; thenat
     echo 'vlang is not installed.' >&2
     exit 1
     fi
+
+    v ls --install
+    ln -s ~/.vls/bin/vls_linux_x64 /usr/local/bin/vls
 }
 
 
