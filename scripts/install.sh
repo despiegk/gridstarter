@@ -68,7 +68,7 @@ function gridstarter_get {
         popd 2>&1 >> /dev/null
     else
         pushd $DIR_CODE/github/despiegk 2>&1 >> /dev/null
-        git clone --depth 1 --no-single-branch git@github.com:freeflowuniverse/gridstarter.git
+        git clone --depth 1 --no-single-branch git@github.com:despiegk/gridstarter.git
         popd 2>&1 >> /dev/null
     fi
 }
