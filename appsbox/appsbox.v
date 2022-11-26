@@ -1,8 +1,14 @@
 module appsbox
 
+import freeflowuniverse.crystallib.actionrunner
 import os
 
 
+fn run (path string)!{
+	mut ar := actionrunner.run(path)!
+	println(ar)
+
+}
 
 // // set home directory and do initialization of multiple parts
 // fn (mut apps AppsBox) home_set(path_ string) {
