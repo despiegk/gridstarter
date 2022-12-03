@@ -2,7 +2,7 @@ module appsbox
 
 import os
 import freeflowuniverse.crystallib.pathlib
-
+import freeflowuniverse.crystallib.params
 
 // [heap]
 // pub interface App {
@@ -32,9 +32,9 @@ pub struct BinPath {
 pub struct AppBase {
 pub mut:
 	name     string
-	params_str string
+	params 	 params.Params
 	runner_id int
-	node_str  string // root@192.168.10.10 or root@192.168.10.10:2233 or localhost
+	node_str  string = "localhost" // root@192.168.10.10 or root@192.168.10.10:2233 or localhost
 	wish	 AppWish
 	state	 AppState
 	tcp_ports        []int

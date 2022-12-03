@@ -13,7 +13,7 @@ macro how to install postgresql:
 
 all arguments are optional
 
-!!app.postgresql.params
+!!app.postgresql.define
     db.path:'/var/db/data'              
     unixsocket.path:'/var/db/socket'    
     tcp.port:5432                       
