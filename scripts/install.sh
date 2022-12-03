@@ -14,6 +14,7 @@ function github_keyscan {
 function os_update {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
         apt update
+        apt install mc curl tmux net-tools git htop -y
         apt upgrade -y
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         echo 
@@ -58,7 +59,10 @@ function crystal_lib_get {
         fi
     fi
 
-    
+
+    mkdir -p ~/.vmodules/freeflowuniverse
+    rm -f ~/.vmodules/freeflowuniverse/crystallib
+    ln -s ~/code/github/freeflowuniverse/crystallib ~/.vmodules/freeflowuniverse/crystallib 
 
 }
 
@@ -74,6 +78,73 @@ function gridstarter_get {
         git clone --depth 1 --no-single-branch git@github.com:despiegk/gridstarter.git
         popd 2>&1 >> /dev/null
     fi
+
+    mkdir -p ~/.vmodules/freeflowuniverse
+    rm -f ~/.vmodules/freeflowuniverse/gridstarter
+    ln -s ~/code/github/despiegk/gridstarter ~/.vmodules/freeflowuniverse/gridstarter 
+
+
+}
+
+
+
+
+function v_install {
+    set -e
+    if [[ -z "${DIR_CODE_INT}" ]]; then 
+        echo 'Make sure to source env.sh before calling this script.'
+        exit 1
+    fi
+
+
+    if [ -d "$HOME/.vmodules" ]
+    then
+        if [[ -z "${USER}" ]]; then
+            sudo chown -R $USER:$USER ~/.vmodules
+        else
+            USER="$(whoami)"
+            sudo chown -R $USER ~/.vmodules
+        fi
+    fi
+
+
+    if [[ -d "$DIR_CODE_INT/v" ]]; then
+        pushd $DIR_CODE_INT/v
+        git pull
+        popd "$@" > /dev/null
+    else
+        mkdir -p $DIR_CODE_INT
+        pushd $DIR_CODE_INT
+        sudo rm -rf $DIR_CODE_INT/v
+        if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
+            sudo apt update
+            sudo apt install libgc-dev gcc make -y
+        elif [[ "$OSTYPE" == "darwin"* ]]; then
+            brew install bdw-gc
+        else
+            echo "ONLY SUPPORT OSX AND LINUX FOR NOW"
+            exit 1
+        fi    
+        git clone https://github.com/vlang/v
+        popd "$@" > /dev/null
+    fi
+
+    pushd $DIR_CODE_INT/v
+    make
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
+        sudo ./v symlink
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        ./v symlink
+    fi
+    popd "$@" > /dev/null
+
+    if ! [ -x "$(command -v v)" ]; thenat
+    echo 'vlang is not installed.' >&2
+    exit 1
+    fi
+
+    v ls --install
+    ln -s ~/.vls/bin/vls_linux_x64 /usr/local/bin/vls
 }
 
 

@@ -9,7 +9,6 @@ pub struct PostgresApp {
 pub mut:
 	name            string
 	postgres_passwd string
-	appconfig       appsbox.AppConfig
 }
 
 pub struct PostgresAppArgs {
