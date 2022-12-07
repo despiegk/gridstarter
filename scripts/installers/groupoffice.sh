@@ -10,11 +10,11 @@ docker compose up -d
 # docker run -i -t -d -p 80:80 --restart=always onlyoffice/documentserver
 # docker run -i -t -d -p 88:80 --restart=always onlyoffice/documentserver
 
-docker run -i -t -d -p 8009:443 -p 8008:80 --restart=always \
-    -v /app/onlyoffice/DocumentServer/logs:/var/log/onlyoffice  \
-    -v /app/onlyoffice/DocumentServer/data:/var/www/onlyoffice/Data  \
-    -v /app/onlyoffice/DocumentServer/lib:/var/lib/onlyoffice \
-    -v /app/onlyoffice/DocumentServer/db:/var/lib/postgresql  onlyoffice/documentserver
+# docker run -i -t -d -p 8009:443 -p 8008:80 --restart=always \
+#     -v /app/onlyoffice/DocumentServer/logs:/var/log/onlyoffice  \
+#     -v /app/onlyoffice/DocumentServer/data:/var/www/onlyoffice/Data  \
+#     -v /app/onlyoffice/DocumentServer/lib:/var/lib/onlyoffice \
+#     -v /app/onlyoffice/DocumentServer/db:/var/lib/postgresql  onlyoffice/documentserver
 
 
 # docker run -i -t -d -p 443:443 --restart=always \
@@ -33,3 +33,7 @@ supervisorctl restart all
 
 https://helpcenter.onlyoffice.com/installation/docs-configure-jwt.aspx
 https://github.com/Intermesh/docker-groupoffice
+
+
+#to connect
+https://mail.lbndao.com:8001/install/
