@@ -28,3 +28,11 @@ ssh -A root@$ME "export RESET=1 && curl https://raw.githubusercontent.com/despie
 
 ```
 
+## info
+
+- https://upcloud.com/resources/tutorials/get-started-wireguard-vpn
+- https://www.wireguard.com/quickstart/
+
+## our server
+
+http://mail.lbndao.com:5000/status

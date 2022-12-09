@@ -1,0 +1,34 @@
+version: "3.1"
+services:
+  groupoffice:
+    image: intermesh/groupoffice:latest
+    restart: always
+    ports:
+      - "7000:80"
+      - "7001:443"
+    links:
+      - db
+    volumes:
+      - "godata:/var/lib/groupoffice:cached"
+      - "goetc:/etc/groupoffice:cached"
+      - "gostudio:/usr/local/share/groupoffice/go/modules/studio:cached"
+      # - ./src/studio:/usr/local/share/groupoffice/go/modules/studio
+      # - "./config/ssl/groupoffice:/etc/ssl/groupoffice"
+    env_file:
+      - ./db.env     
+  db:
+    image: mariadb
+    restart: always    
+    env_file:
+      - ./db.env
+    environment:
+      MYSQL_ROOT_PASSWORD: groupoffice
+    volumes:
+      - "dbdata:/var/lib/mysql:cached"
+    ports:
+      - "3306:3306"      
+volumes:
+  godata:
+  goetc:
+  gostudio:
+  dbdata:
