@@ -4,7 +4,7 @@ module main
 import freeflowuniverse.gridstarter.appsbox
 import os
 
-const testpath = os.dir(@FILE) + '/postgresql'
+const testpath = os.dir(@FILE) + '/instructions'
 
 fn do() ! {
 	//will look for

@@ -27,6 +27,13 @@ pub struct BinPath {
 	name string		//name of the binary in  ~/hub/bin/$name
 }
 
+[heap]
+pub struct SyncPath {
+	from string			//path in the build dir
+	to 	 string			//path in the app dir
+}
+
+
 
 [heap]
 pub struct AppBase {
@@ -73,7 +80,7 @@ pub fn (mut app AppBase) exists() bool {
 }
 
 // copy binary related to app to the sandbox (~/hub3/bin) & register in metadata
-pub fn (mut app AppConfig) install(path string, name_ string) ? {
+pub fn (mut app AppBase) install(path string, name_ string) ? {
 	// mut f := factory
 	// mut name := name_
 

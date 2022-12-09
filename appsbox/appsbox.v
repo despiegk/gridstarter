@@ -1,12 +1,21 @@
 module appsbox
 
-import freeflowuniverse.crystallib.actionrunner
-import os
+// import freeflowuniverse.crystallib.actionrunner
+import freeflowuniverse.crystallib.pathlib
+import regex
 
+pub fn run (path0 string)!{
 
-fn run (path string)!{
-	mut ar := actionrunner.run(path)!
-	println(ar)
+	mut path := pathlib.get_dir(path0, false)!	
+
+	mut re := regex.regex_opt(".*") or {panic(err)}
+	ar:=path.list(mut regex:re, 	recursive:true)!
+	for p in ar{
+		if p.path.ends_with(".md"){
+			println(p)
+		}
+	}
+
 
 }
 
