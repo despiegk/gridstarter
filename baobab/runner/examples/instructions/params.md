@@ -7,7 +7,6 @@ macro how to install postgresql:
 !!app.state.set name:'mypostgresql'
     id:""
     wish:"active"               #init, built, installed, configured, active, stopped
-    state:"init"                #state as read from the reality init, built, installed, configured, active, error, stopped
 
 ## definition of the app object (params)
 

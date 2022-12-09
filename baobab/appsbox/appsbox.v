@@ -1,23 +1,5 @@
 module appsbox
 
-// import freeflowuniverse.crystallib.actionrunner
-import freeflowuniverse.crystallib.pathlib
-import regex
-
-pub fn run (path0 string)!{
-
-	mut path := pathlib.get_dir(path0, false)!	
-
-	mut re := regex.regex_opt(".*") or {panic(err)}
-	ar:=path.list(mut regex:re, 	recursive:true)!
-	for p in ar{
-		if p.path.ends_with(".md"){
-			println(p)
-		}
-	}
-
-
-}
 
 // // set home directory and do initialization of multiple parts
 // fn (mut apps AppsBox) home_set(path_ string) {

@@ -1,17 +1,12 @@
 module postgres
 
 import os
-import freeflowuniverse.crystallib.builder
-import freeflowuniverse.crystallib.params
-import freeflowuniverse.gridstarter.appsbox as {AppBase}
+// import freeflowuniverse.crystallib.builder
+// import freeflowuniverse.crystallib.params
+import freeflowuniverse.baobab.appsbox
 
-pub struct MyApp {
-	AppBase
-pub mut:
-	params_active ParamsActive
-}
 
-struct ParamsActive {
+struct Config {
 	name             string
 	tcp_port         int
 	db_path			 string
@@ -28,31 +23,37 @@ struct ParamsActive {
 // db.version:'15.1'                   
 // name:'mypostgresql'                 
 // nodes:'' #optional (nodes on which this needs to be executed)
-// dependencies:'' #optional (id's from action's which need to be run before this)
-pub fn get(params params.Params)!MyApp {
+// dependencies:'' #optional (names from apps which need to be in certain state)
+pub fn config(mut apps appsbox.Apps, mut app appsbox.App)!Config {
 
-	mut params:=ParamsActive{
-		tcp_port: params0.get_int_default("tcp.port", 0)
-		db_path: params0.get_default("db.path", "")
-		unixsocket_path: params0.get_default("unixsocket.path", "")
-		postgres_passwd: params0.get_default("db.passwd", "")
-		version: params0.get_default("db.version", "")
+	mut params0 := app.params
+
+	mut config:=Config{
+		tcp_port: params0.get_int_default("tcp.port", 0)!
+		db_path: params0.get_default("db.path", "")!
+		unixsocket_path: params0.get_default("unixsocket.path", "")!
+		postgres_passwd: params0.get_default("db.passwd", "")!
+		version: params0.get_default("version", "15.1")!
 	}
 
-	mut app:=MyApp{
-		params: params
-	}
-
-	app.params_str = params_str
-	app.name = params0.get("name")!
-
-	println(app)
-
-	if true{
-		panic("sdsd")
-	}
+	return config
 
 }
+
+pub fn build(mut apps appsbox.Apps, mut app appsbox.App)! {
+ 
+	mut node := apps.node_get(app.name)!
+
+	if true{
+		println(app)
+		panic("sfsfdf")
+	}
+
+	// app.save()!
+
+}
+
+
 
 // pub fn (mut app MyApp) init(params_text string)  {
 
@@ -61,7 +62,6 @@ pub fn get(params params.Params)!MyApp {
 
 // 	myapp.install(false)?
 
-// 	mut n := builder.node_local()?
 // 	mut tcpport := myapp.appconfig.tcpports[0]
 // 	bin_path := factory.bin_path
 

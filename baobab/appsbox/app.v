@@ -34,16 +34,18 @@ pub struct SyncPath {
 }
 
 
-
 [heap]
-pub struct AppBase {
+pub struct App {
 pub mut:
+	version  string //unique version, so we know what we have build and where to sync it
 	name     string
 	params 	 params.Params
 	runner_id int
 	node_str  string = "localhost" // root@192.168.10.10 or root@192.168.10.10:2233 or localhost
-	wish	 AppWish
-	state	 AppState
+	wish			AppWish
+	install_state	State
+	build_state		State
+	synced_state	State //is the code available locally and in line with version
 	tcp_ports        []int
 	unixsocket_paths []string	
 	builddir pathlib.Path //location of where the app is being built
@@ -53,8 +55,9 @@ pub mut:
 
 }
 
+
 //we return unknown if we don't know it
-pub fn (mut app AppBase) exists() bool {
+pub fn (mut app App) exists() bool {
 	if !os.exists(app.appdir.path) {
 		return false
 	}
@@ -80,7 +83,7 @@ pub fn (mut app AppBase) exists() bool {
 }
 
 // copy binary related to app to the sandbox (~/hub3/bin) & register in metadata
-pub fn (mut app AppBase) install(path string, name_ string) ? {
+pub fn (mut app App) install(path string, name_ string) ? {
 	// mut f := factory
 	// mut name := name_
 

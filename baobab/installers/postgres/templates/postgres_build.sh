@@ -1,6 +1,6 @@
 set -ex
 
-export VERSION='${params.version}'
+export VERSION='${app.params.version}'
 
 wget https://ftp.postgresql.org/pub/source/v15.1/postgresql-${VERSION}.tar.gz
 gunzip postgresql-${VERSION}.tar.gz
