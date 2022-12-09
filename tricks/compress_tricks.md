@@ -1,7 +1,7 @@
 ## compress tricks
 
 ```
-tar --exclude='*.pyc' -I zstd  -cvf test.tar.zst ansible/
+tar --exclude='*.pyc' -I zstd  -cvf sandbox_python.tar.zst ansible/
 ```
 
 using zstd
