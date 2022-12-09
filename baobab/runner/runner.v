@@ -12,7 +12,7 @@ import regex
 pub fn run (path0 string)!{
 
 	mut path := pathlib.get_dir(path0, false)!	
-	mut apps:=appsbox.new()
+	mut apps:=appsbox.new()!
 
 	mut re := regex.regex_opt(".*") or {panic(err)}
 	ar:=path.list(mut regex:re, 	recursive:true)!
@@ -37,7 +37,7 @@ fn run_one(mut apps appsbox.Apps, path string)!{
 			name := action.params.get("name")! //will give error if not found
 			mut app:=apps.new(name,action.params)!
 			action.name.starts_with("app.postgresql"){
-				postgres.run(mut apps, mut app)!
+				postgres.run(mut app)!
 			}
 			
 

@@ -24,7 +24,7 @@ struct Config {
 // name:'mypostgresql'                 
 // nodes:'' #optional (nodes on which this needs to be executed)
 // dependencies:'' #optional (names from apps which need to be in certain state)
-pub fn config(mut apps appsbox.Apps, mut app appsbox.App)!Config {
+pub fn config(mut app appsbox.App)!Config {
 
 	mut params0 := app.params
 
@@ -40,9 +40,9 @@ pub fn config(mut apps appsbox.Apps, mut app appsbox.App)!Config {
 
 }
 
-pub fn build(mut apps appsbox.Apps, mut app appsbox.App)! {
+pub fn build(mut app appsbox.App)! {
  
-	mut node := apps.node_get(app.name)!
+	mut node := app.apps.node_get(app.name)!
 
 	if true{
 		println(app)

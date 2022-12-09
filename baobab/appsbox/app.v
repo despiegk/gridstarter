@@ -48,37 +48,35 @@ pub mut:
 	synced_state	State //is the code available locally and in line with version
 	tcp_ports        []int
 	unixsocket_paths []string	
-	builddir pathlib.Path //location of where the app is being built
-	appdir	 pathlib.Path //location of where the app is being installed
 	bins 	 []BinPath //how binaries need to be copied int ~/hub/bin/$name destination is just a name, bins are for all apps
 	sync 	 []SyncPath //what needs to be synced from the source to the destination (after build)
-
+	apps 	 &Apps [str: skip]
 }
 
 
 //we return unknown if we don't know it
 pub fn (mut app App) exists() bool {
-	if !os.exists(app.appdir.path) {
-		return false
-	}
-	for bin in app.bins {
-		path := '${app.appdir}/bin/${bin.name}'
-		println(' - check exists: ${path}')
-		if !os.exists(path) {
-			return false
-		}
-	}
-	if app.bins == [] {
-		return false
-	}
-	for s in app.sync {
-		from := '${app.appdir}/${s.from}'
-		to := '${app.appdir}/${s.to}'
-		println(' - check exists: ${to}')
-		if !os.exists(to) {
-			return false
-		}
-	}	
+	// if !os.exists(app.appdir.path) {
+	// 	return false
+	// }
+	// for bin in app.bins {
+	// 	path := '${app.appdir}/bin/${bin.name}'
+	// 	println(' - check exists: ${path}')
+	// 	if !os.exists(path) {
+	// 		return false
+	// 	}
+	// }
+	// if app.bins == [] {
+	// 	return false
+	// }
+	// for s in app.sync {
+	// 	from := '${app.appdir}/${s.from}'
+	// 	to := '${app.appdir}/${s.to}'
+	// 	println(' - check exists: ${to}')
+	// 	if !os.exists(to) {
+	// 		return false
+	// 	}
+	// }	
 	return true
 }
 

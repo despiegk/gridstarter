@@ -11,19 +11,26 @@ pub struct Apps {
 pub mut:
 	myapps map[string]&App
 	builder builder.BuilderFactory
+	paths AppPaths
 }
 
-pub fn new() Apps{
+pub fn new() !Apps{
 	mut builder1 := builder.new()
-	return Apps{builder:builder1}
+	mut apps:= Apps{
+		builder:builder1
+	}
+	apps.set_paths("~/play")!
+	return apps
 }
 
 pub fn (mut apps Apps) new(name0 string, params params.Params) !&App{
 	mut name:=texttools.name_fix(name0)
 
+
 	mut app := App{
 		name:name
 		params:params
+		apps:&apps
 	}
 
 	apps.myapps[name] = &app
@@ -59,7 +66,8 @@ pub fn (mut apps Apps) node_get(name0 string) !&builder.Node {
 	// 	ipaddr: 'localhost'
 	// 	name: app.name
 	// }
-
+	
+	//TODO: only localnode for now
 	mut node := apps.builder.node_local() or { return error('Failed to create node: $err') }
 
 	return node
