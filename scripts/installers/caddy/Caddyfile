@@ -6,7 +6,7 @@
 {
     email kristof@incubaid.com
     # acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
-    debug
+    # debug
 }
 
 files.hub3.world {
@@ -14,5 +14,5 @@ files.hub3.world {
 }
 
 sites.hub3.world {
-    reverse_proxy http://whoami:80
+    reverse_proxy http://localhost:8000
 }
