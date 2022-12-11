@@ -1,4 +1,4 @@
-set -e
+set -ex
 
 export OURHOME="$HOME/play"
 mkdir -p $OURHOME
@@ -77,7 +77,7 @@ function gridstarter_get {
     mkdir -p $DIR_CODE/github/despiegk
     if [[ -d "$DIR_CODE/github/despiegk/gridstarter" ]]
     then
-        pushd $DIR_CODE/$2 2>&1 >> /dev/null
+        pushd $DIR_CODE/github/despiegk/gridstarter 2>&1 >> /dev/null
         git pull
         popd 2>&1 >> /dev/null
     else
@@ -94,15 +94,15 @@ function gridstarter_get {
 }
 
 function vstor_get {
-    mkdir -p $DIR_CODE/github/freeflowuniverse
-    if [[ -d "$DIR_CODE/github/freeflowuniverse/vstor" ]]
+    mkdir -p $DIR_CODE/github/threefoldtech
+    if [[ -d "$DIR_CODE/github/threefoldtech/vstor" ]]
     then
-        pushd $DIR_CODE/$2 2>&1 >> /dev/null
+        pushd $DIR_CODE/github/threefoldtech/vstor 2>&1 >> /dev/null
         git pull
         popd 2>&1 >> /dev/null
     else
-        pushd $DIR_CODE/github/freeflowuniverse 2>&1 >> /dev/null
-        git clone --depth 1 --no-single-branch git@github.com:freeflowuniverse/vstor.git
+        pushd $DIR_CODE/github/threefoldtech 2>&1 >> /dev/null
+        git clone --depth 1 --no-single-branch git@github.com:threefoldtech/vstor.git
         popd 2>&1 >> /dev/null
     fi
 
