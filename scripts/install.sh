@@ -1,4 +1,4 @@
-set -ex
+set -e
 
 export OURHOME="$HOME/play"
 mkdir -p $OURHOME
