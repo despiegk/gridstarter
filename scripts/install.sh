@@ -86,6 +86,27 @@ function gridstarter_get {
 
 }
 
+function vstor_get {
+    mkdir -p $DIR_CODE/github/freeflowuniverse
+    if [[ -d "$DIR_CODE/github/freeflowuniverse/vstor" ]]
+    then
+        pushd $DIR_CODE/$2 2>&1 >> /dev/null
+        git pull
+        popd 2>&1 >> /dev/null
+    else
+        pushd $DIR_CODE/github/freeflowuniverse 2>&1 >> /dev/null
+        git clone --depth 1 --no-single-branch git@github.com:freeflowuniverse/vstor.git
+        popd 2>&1 >> /dev/null
+    fi
+
+    mkdir -p ~/.vmodules/freeflowuniverse
+    rm -f ~/.vmodules/freeflowuniverse/vstor
+    ln -s ~/code/github/freeflowuniverse/vstor ~/.vmodules/freeflowuniverse/vstor 
+
+
+}
+
+
 
 
 
@@ -279,6 +300,7 @@ if ! [[ -f "$HOME/.vmodules/done_crystallib" ]]; then
 
     crystal_lib_get
     gridstarter_get
+    vstor_get
 
     touch "$HOME/.vmodules/done_crystallib"
 fi
