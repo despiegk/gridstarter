@@ -159,7 +159,7 @@ function v_install {
     fi
     popd "$@" > /dev/null
 
-    if ! [ -x "$(command -v v)" ]; thenat
+    if ! [ -x "$(command -v v)" ]; then
     echo 'vlang is not installed.' >&2
     exit 1
     fi
