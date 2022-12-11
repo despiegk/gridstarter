@@ -14,7 +14,7 @@ function github_keyscan {
 export DEBIAN_FRONTEND=noninteractive
 
 function os_package_install {
-    apt -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" install $1 -q -y --allow-downgrades --allow-remove-essential --allow-change-held-packages
+    apt -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" install $1 -q -y --allow-downgrades --allow-remove-essential 
 }
 
 function os_update {
@@ -23,6 +23,7 @@ function os_update {
         apt update -y
         set +e
         apt-get -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" upgrade -q -y --allow-downgrades --allow-remove-essential --allow-change-held-packages
+        apt-mark hold grub-efi-amd64-signed
         set -e
         os_package_install "mc curl tmux net-tools git htop"
         apt upgrade -y
