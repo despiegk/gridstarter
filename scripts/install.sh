@@ -13,11 +13,15 @@ function github_keyscan {
 
 export DEBIAN_FRONTEND=noninteractive
 
+function os_package_install {
+    apt -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" install $1 -q -y --allow-downgrades --allow-remove-essential --allow-change-held-packages
+}
+
 function os_update {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
         apt update -y
         apt-get -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" dist-upgrade -q -y --allow-downgrades --allow-remove-essential --allow-change-held-packages
-        apt install mc curl tmux net-tools git htop -y
+        os_package_install "mc curl tmux net-tools git htop"
         apt upgrade -y
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         echo 
@@ -26,7 +30,7 @@ function os_update {
 
 function redis_install {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
-        apt install libssl-dev redis -y
+        os_package_install "libssl-dev redis"
         /etc/init.d/redis-server start
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         if ! [ -x "$(command -v redis-server)" ]; then
@@ -141,8 +145,7 @@ function v_install {
         pushd $DIR_CODE_INT
         sudo rm -rf $DIR_CODE_INT/v
         if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
-            sudo apt update
-            sudo apt install libgc-dev gcc make -y
+            os_package_install "libgc-dev gcc make"
         elif [[ "$OSTYPE" == "darwin"* ]]; then
             brew install bdw-gc
         else
