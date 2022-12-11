@@ -9,7 +9,7 @@ fn do() ! {
 		tcp.port:5432                       
 		db.passwd:'mysecret'                
 		version:'15.1'                   
-		name:'mypostgresql'   
+		name:'mypostgres'   
 	")
 
 	app.install()!

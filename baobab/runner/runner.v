@@ -6,7 +6,8 @@ import freeflowuniverse.crystallib.pathlib
 import freeflowuniverse.crystallib.texttools
 import freeflowuniverse.crystallib.params
 import freeflowuniverse.baobab.appsbox
-import freeflowuniverse.baobab.installers.postgres
+import freeflowuniverse.baobab.services.postgresql
+import freeflowuniverse.baobab.services.installcache
 import regex
 
 pub fn run (path0 string)!{
@@ -33,15 +34,38 @@ fn run_one(mut apps appsbox.Apps, path string)!{
 			print(texttools.indent('$action\n ', '  |  '))
 		}
 
-		if action.name.starts_with("app"){
-			name := action.params.get("name")! //will give error if not found
-			mut app:=apps.new(name,action.params)!
-			action.name.starts_with("app.postgresql"){
-				postgres.run(mut app)!
-			}
-			
+		mut instance:=""
+		name = action.name.split(".")[1]
+		if action.name.starts_with("app") || action.name.starts_with("service"){
+			instance = action.params.get_default("instance","default")!
 
+			version := action.params.get_default("version","0.0.0")!
+			action.params.kwarg_add("name",name)
+			if ! action.params.exists("version"){
+				action.params.kwarg_add("version",version)			
+			}
+			if ! action.params.exists("instance"){
+				action.params.kwarg_add("instance",instance)			
+			}			
 		}
+		mut app:=apps.new(name,instance,action.params)!
+
+		if action.name.starts_with("service"){
+			if name=="installcache"{
+				installcache.define(mut app)!
+			}
+		}
+
+		if action.name.starts_with("app"){	
+			action.name.starts_with("app.postgresql.build"){
+				postgresql.build(mut app)!
+			}
+			action.name.starts_with("app.postgresql.install"){
+				postgresql.install(mut app)!
+			}
+		}
+
+
 
 	}
 

@@ -12,16 +12,15 @@ all arguments are optional
 !!app.caddy.build
     version:'2.6.2'
 
-!!app.postgresql.define 
-    instance:'mypostgresql'
+!!app.postgresql.install 
+    instance:'mypostgres'
     db.path:'/var/db/data'              
     unixsocket.path:'/var/db/socket'    
     tcp.port:5432                       
     db.passwd:'mysecret'                
 
-!!app.caddy.define 
+!!app.caddy.install 
     instance:'caddy1'
-   
 
 !!app.caddy.site.add 
     instance:'caddy1_default'
@@ -33,6 +32,6 @@ all arguments are optional
 ## example how to deploy
 
 !!solution.deploy 
-    name:'mypostgresql' 
-    dependencies:'caddy1_default,mypostgresql'
+    name:'mypostgres' 
+    dependencies:'caddy1_default,mypostgres'
 

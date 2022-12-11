@@ -1,4 +1,4 @@
-module postgres
+module postgresql
 
 import os
 // import freeflowuniverse.crystallib.builder
@@ -21,7 +21,7 @@ struct Config {
 // tcp.port:5432                       
 // db.passwd:'mysecret'                
 // db.version:'15.1'                   
-// name:'mypostgresql'                 
+// name:'mypostgres'                 
 // nodes:'' #optional (nodes on which this needs to be executed)
 // dependencies:'' #optional (names from apps which need to be in certain state)
 pub fn config(mut app appsbox.App)!Config {
@@ -33,7 +33,6 @@ pub fn config(mut app appsbox.App)!Config {
 		db_path: params0.get_default("db.path", "")!
 		unixsocket_path: params0.get_default("unixsocket.path", "")!
 		postgres_passwd: params0.get_default("db.passwd", "")!
-		version: params0.get_default("version", "15.1")!
 	}
 
 	return config
@@ -41,18 +40,61 @@ pub fn config(mut app appsbox.App)!Config {
 }
 
 pub fn build(mut app appsbox.App)! {
+
+
+	if app.build_state == .ok {
+		return
+	}
+
  
 	mut node := app.apps.node_get(app.name)!
 
+	postgres_path:="${app.apps.paths.base.path}/postgresql"
+	version:= app.params.get_default("version", "15.1")!
+
+	mut cmd := $tmpl('templates/postgres_build.sh')
+	node.exec(cmd) or { return error('Cannot build mdbook.\n$err') }
+
+	app.build_state = .ok
+
+
 	if true{
-		println(app)
+		println(cmd)
+		println(app.params)
 		panic("sfsfdf")
 	}
 
-	// app.save()!
+	app.save()!
 
 }
 
+pub fn install(mut app appsbox.App)! {
+
+
+	if app.install_state == .ok {
+		return
+	}
+
+ 
+	mut node := app.apps.node_get(app.name)!
+
+	postgres_path:="${app.apps.paths.base.path}/postgresql"
+	version:= app.params.get_default("version", "15.1")!
+
+	mut cmd := $tmpl('templates/postgres_build.sh')
+	node.exec(cmd) or { return error('Cannot build mdbook.\n$err') }
+
+	app.install_state 	= .ok
+
+
+	if true{
+		println(cmd)
+		panic("sfsfdf")
+	}
+
+	//app.save()!
+
+}
 
 
 // pub fn (mut app MyApp) init(params_text string)  {
@@ -67,10 +109,10 @@ pub fn build(mut app appsbox.App)! {
 
 // 	// set a start command for postgresql
 // 	cmd := '$bin_path/postgres_start'
-// 	n.exec(cmd: cmd, reset: true, description: 'start postgres', stdout: true)?
+// 	n.exec(cmd: cmd, reset: true, description: 'start postgresql', stdout: true)?
 // 	alive := myapp.check()?
 // 	if !alive {
-// 		return error('Could not start postgres.')
+// 		return error('Could not start postgresql.')
 // 	}
 // }
 
@@ -79,17 +121,17 @@ pub fn build(mut app appsbox.App)! {
 // 	mut bin_path := appsbox.get().bin_path
 // 	mut n := builder.node_local()?
 // 	tcpport := myapp.appconfig.tcpports[0]
-// 	var_path := factory.var_path + '/postgres'
+// 	var_path := factory.var_path + '/postgresql'
 
 // 	cmd := '$bin_path/pg_ctl stop -D $var_path'
-// 	n.exec(cmd: cmd, reset: true, description: 'stop postgres', stdout: true)?
+// 	n.exec(cmd: cmd, reset: true, description: 'stop postgresql', stdout: true)?
 // }
 
 // pub fn (mut myapp PostgresApp) install(reset bool) ? {
 // 	mut factory := appsbox.get()
 
 // 	mut n := builder.node_local()?
-// 	myapp.appconfig.bins = ['postgres', 'postgres_start']
+// 	myapp.appconfig.bins = ['postgresql', 'postgres_start']
 
 // 	// check app is installed, if yes don't need to do anything
 // 	if reset || !myapp.appconfig.exists() {
@@ -100,8 +142,8 @@ pub fn build(mut app appsbox.App)! {
 // 	postgres_path := '$factory.apps_path'
 // 	sysconfdir := postgres_path
 // 	bin_path := factory.bin_path
-// 	var_path := factory.var_path + '/postgres'
-// 	lib_dir := '$postgres_path/lib/postgres'
+// 	var_path := factory.var_path + '/postgresql'
+// 	lib_dir := '$postgres_path/lib/postgresql'
 // 	user := os.user_os()
 
 // 	if !os.exists(var_path) {
@@ -112,7 +154,7 @@ pub fn build(mut app appsbox.App)! {
 
 // 	// need to set  DYLD_LIBRARY_PATH to make sure if we build on other machine with different dir it still works
 // 	// other way: ./pg_ctl -D /tmp/postgres2 -l logfile start
-// 	cmd_start := "export DYLD_LIBRARY_PATH=$lib_dir/lib; $bin_path/postgres -D '$var_path'"
+// 	cmd_start := "export DYLD_LIBRARY_PATH=$lib_dir/lib; $bin_path/postgresql -D '$var_path'"
 // 	n.executor.file_write('$bin_path/postgres_start', cmd_start)?
 
 // 	mut postgres_conf := $tmpl('postgresql.conf')
@@ -129,17 +171,17 @@ pub fn build(mut app appsbox.App)! {
 // 	tcpport := myapp.appconfig.tcpports[0]
 // 	postgres_path := '$factory.apps_path'
 // 	mut cmd := $tmpl('postgres_build.sh')
-// 	mut tmpdir := '/tmp/postgres'
+// 	mut tmpdir := '/tmp/postgresql'
 // 	n.exec(
 // 		cmd: cmd
 // 		reset: true
-// 		description: 'install postgres ; echo ok'
+// 		description: 'install postgresql ; echo ok'
 // 		stdout: true
 // 		tmpdir: tmpdir
 // 	)?
 // }
 
-// // create database, give admin user (postgres) all rights
+// // create database, give admin user (postgresql) all rights
 // pub fn (mut myapp PostgresApp) create_db(db_name string) ? {
 // 	mut factory := appsbox.get()
 // 	mut n := builder.node_local()?

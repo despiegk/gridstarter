@@ -42,7 +42,6 @@ pub mut:
 	params 	 params.Params
 	runner_id int
 	node_str  string = "localhost" // root@192.168.10.10 or root@192.168.10.10:2233 or localhost
-	wish			AppWish
 	install_state	State
 	build_state		State
 	synced_state	State //is the code available locally and in line with version
@@ -53,6 +52,11 @@ pub mut:
 	apps 	 &Apps [str: skip]
 }
 
+//we return unknown if we don't know it
+pub fn (mut app App) save() bool {
+	
+
+}
 
 //we return unknown if we don't know it
 pub fn (mut app App) exists() bool {
