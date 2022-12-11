@@ -11,9 +11,12 @@ function github_keyscan {
     fi
 }
 
+export DEBIAN_FRONTEND=noninteractive
+
 function os_update {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
-        apt update
+        apt update -y
+        apt-get -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" dist-upgrade -q -y --allow-downgrades --allow-remove-essential --allow-change-held-packages
         apt install mc curl tmux net-tools git htop -y
         apt upgrade -y
     elif [[ "$OSTYPE" == "darwin"* ]]; then
