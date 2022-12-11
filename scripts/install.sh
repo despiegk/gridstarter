@@ -1,4 +1,4 @@
-set -e
+set -ex
 
 export OURHOME="$HOME/play"
 mkdir -p $OURHOME
@@ -20,7 +20,7 @@ function os_package_install {
 function os_update {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
         apt update -y
-        apt-get -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" dist-upgrade -q -y --allow-downgrades --allow-remove-essential --allow-change-held-packages
+        apt-get -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" upgrade -q -y --allow-downgrades --allow-remove-essential --allow-change-held-packages
         os_package_install "mc curl tmux net-tools git htop"
         apt upgrade -y
     elif [[ "$OSTYPE" == "darwin"* ]]; then
