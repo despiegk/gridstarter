@@ -117,7 +117,7 @@ function vstor_get {
 }
 
 function ansible_install {
-    if [[ -z "/root/play/ansible" ]]; then 
+    if [[ -d "/root/play/ansible" ]]; then 
         echo
     else
         cd /root/play
