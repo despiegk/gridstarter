@@ -1,4 +1,4 @@
-set -e
+set -ex
 
 export OURHOME="$HOME/play"
 mkdir -p $OURHOME
@@ -117,23 +117,19 @@ function vstor_get {
 }
 
 function ansible_install {
-    cd /root
-    mkdir -p python-venv
-    os_package_install python3 python3-venv
-    cd python-venv
-    python3 -m venv ansible
-    source ansible/bin/activate
-    python3 -m pip install --upgrade pip
-    python3 -m pip install ansible
-    python3 -m pip install dnspython
-    ansible-galaxy collection install ansible.netcommon ansible.posix ansible.utils community.postgresql community.routeros containers.podman community.network community.libvirt community.docker
-
+    if [[ -d "/root/play/ansible" ]]; then 
+        echo
+    else
+        cd /root/play
+        os_package_install python3 python3-venv
+        python3 -m venv ansible
+        source ansible/bin/activate
+        python3 -m pip install --upgrade pip
+        python3 -m pip install ansible
+        python3 -m pip install dnspython
+        ansible-galaxy collection install ansible.netcommon ansible.posix ansible.utils community.postgresql community.routeros containers.podman community.network community.libvirt community.docker
+    fi    
 }
-
-
-
-
-
 
 
 function v_install {
@@ -333,6 +329,12 @@ fi
 
 if ! [ -x "$(command -v v)" ]; then
   v_install
+fi
+
+if [[ -z "${ANSIBLE}" ]]; then
+    echo
+else
+    ansible_install
 fi
 
 # pushd $DIR_CT
