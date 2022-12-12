@@ -22,10 +22,8 @@ function os_update {
         export DEBIAN_FRONTEND=noninteractive
         apt update -y
         apt-mark hold grub-efi-amd64-signed
-        set +e
         apt-get -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" upgrade -q -y --allow-downgrades --allow-remove-essential --allow-change-held-packages
         apt-mark hold grub-efi-amd64-signed
-        set -e
         os_package_install "mc curl tmux net-tools git htop"
         apt upgrade -y
     elif [[ "$OSTYPE" == "darwin"* ]]; then
