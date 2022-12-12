@@ -21,6 +21,7 @@ function os_update {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
         export DEBIAN_FRONTEND=noninteractive
         apt update -y
+        apt-mark hold grub-efi-amd64-signed
         set +e
         apt-get -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" upgrade -q -y --allow-downgrades --allow-remove-essential --allow-change-held-packages
         apt-mark hold grub-efi-amd64-signed
