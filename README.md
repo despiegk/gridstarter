@@ -9,6 +9,8 @@ curl https://raw.githubusercontent.com/despiegk/gridstarter/main/scripts/install
 curl https://raw.githubusercontent.com/despiegk/gridstarter/main/scripts/install.sh > /tmp/install.sh && bash -x /tmp/install.sh
 ```
 
+
+
 ## install on remote server over ssh
 
 You need ssh-key loaded in ssh-agent
@@ -26,6 +28,24 @@ ssh -A root@$ME
 #to reset all (same as install but will restart)
 ssh -A root@$ME "export RESET=1 && curl https://raw.githubusercontent.com/despiegk/gridstarter/main/scripts/install.sh > /tmp/install.sh && bash -x /tmp/install.sh"
 
+```
+
+## to get ansible as part of install
+
+to install
+
+```bash
+export ANSIBLE=1
+#now do the installer as mentioned above e.g.
+export ME='195.192.213.92'
+ssh -A root@$ME "curl https://raw.githubusercontent.com/despiegk/gridstarter/main/scripts/install.sh > /tmp/install.sh && bash -x /tmp/install.sh"
+```
+
+
+to use
+
+```bash
+source /root/play/ansible/bin/activate
 ```
 
 ## info
