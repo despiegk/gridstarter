@@ -1,4 +1,4 @@
-set -ex
+set -e
 
 export OURHOME="$HOME/play"
 mkdir -p $OURHOME
@@ -115,6 +115,22 @@ function vstor_get {
 
 
 }
+
+function ansible_install {
+    cd /root
+    mkdir -p python-venv
+    os_package_install python3 python3-venv
+    cd python-venv
+    python3 -m venv ansible
+    source ansible/bin/activate
+    python3 -m pip install --upgrade pip
+    python3 -m pip install ansible
+    python3 -m pip install dnspython
+    ansible-galaxy collection install ansible.netcommon ansible.posix ansible.utils community.postgresql community.routeros containers.podman community.network community.libvirt community.docker
+
+}
+
+
 
 
 
