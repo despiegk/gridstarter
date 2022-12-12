@@ -128,6 +128,8 @@ function ansible_install {
         python3 -m pip install ansible
         python3 -m pip install dnspython
         ansible-galaxy collection install ansible.netcommon ansible.posix ansible.utils community.postgresql community.routeros containers.podman community.network community.libvirt community.docker
+        mkdir -p /root/.ansible/roles
+        
     fi    
 }
 
