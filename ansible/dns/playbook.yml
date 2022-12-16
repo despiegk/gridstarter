@@ -1,0 +1,24 @@
+
+- hosts: 127.0.0.1
+  connection: local
+  collections:
+    - my_namespace.my_collection
+  tasks:
+  - name: disable systemd-resolved
+    systemd:
+      name: systemd-resolved
+      state: stopped
+      enabled: false
+    become: true
+  - name: resolv.conf symlink               # This is to use normal resolv.conf
+    file:
+      src: /run/systemd/resolve/resolv.conf
+      dest: /etc/resolv.conf
+      owner: root
+      group: root
+      state: link
+    become: true    
+  roles:
+    - cloudalchemy.coredns
+  vars:
+    coredns_config_file: "Corefile"  

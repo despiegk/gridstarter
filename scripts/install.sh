@@ -1,4 +1,4 @@
-set -e
+set -ex
 
 export OURHOME="$HOME/play"
 mkdir -p $OURHOME
@@ -11,10 +11,20 @@ function github_keyscan {
     fi
 }
 
+export DEBIAN_FRONTEND=noninteractive
+
+function os_package_install {
+    apt -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" install $1 -q -y --allow-downgrades --allow-remove-essential 
+}
+
 function os_update {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
-        apt update
-        apt install mc curl tmux net-tools git htop -y
+        export DEBIAN_FRONTEND=noninteractive
+        apt update -y
+        apt-mark hold grub-efi-amd64-signed
+        apt-get -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" upgrade -q -y --allow-downgrades --allow-remove-essential --allow-change-held-packages
+        apt-mark hold grub-efi-amd64-signed
+        os_package_install "mc curl tmux net-tools git htop"
         apt upgrade -y
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         echo 
@@ -23,7 +33,7 @@ function os_update {
 
 function redis_install {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
-        apt install libssl-dev redis -y
+        os_package_install "libssl-dev redis"
         /etc/init.d/redis-server start
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         if ! [ -x "$(command -v redis-server)" ]; then
@@ -70,7 +80,7 @@ function gridstarter_get {
     mkdir -p $DIR_CODE/github/despiegk
     if [[ -d "$DIR_CODE/github/despiegk/gridstarter" ]]
     then
-        pushd $DIR_CODE/$2 2>&1 >> /dev/null
+        pushd $DIR_CODE/github/despiegk/gridstarter 2>&1 >> /dev/null
         git pull
         popd 2>&1 >> /dev/null
     else
@@ -87,15 +97,15 @@ function gridstarter_get {
 }
 
 function vstor_get {
-    mkdir -p $DIR_CODE/github/freeflowuniverse
-    if [[ -d "$DIR_CODE/github/freeflowuniverse/vstor" ]]
+    mkdir -p $DIR_CODE/github/threefoldtech
+    if [[ -d "$DIR_CODE/github/threefoldtech/vstor" ]]
     then
-        pushd $DIR_CODE/$2 2>&1 >> /dev/null
+        pushd $DIR_CODE/github/threefoldtech/vstor 2>&1 >> /dev/null
         git pull
         popd 2>&1 >> /dev/null
     else
-        pushd $DIR_CODE/github/freeflowuniverse 2>&1 >> /dev/null
-        git clone --depth 1 --no-single-branch git@github.com:freeflowuniverse/vstor.git
+        pushd $DIR_CODE/github/threefoldtech 2>&1 >> /dev/null
+        git clone --depth 1 --no-single-branch git@github.com:threefoldtech/vstor.git
         popd 2>&1 >> /dev/null
     fi
 
@@ -106,8 +116,22 @@ function vstor_get {
 
 }
 
-
-
+function ansible_install {
+    if [[ -d "/root/play/ansible" ]]; then 
+        echo
+    else
+        cd /root/play
+        os_package_install python3 python3-venv
+        python3 -m venv ansible
+        source ansible/bin/activate
+        python3 -m pip install --upgrade pip
+        python3 -m pip install ansible
+        python3 -m pip install dnspython
+        ansible-galaxy collection install ansible.netcommon ansible.posix ansible.utils community.postgresql community.routeros containers.podman community.network community.libvirt community.docker
+        mkdir -p /root/.ansible/roles
+        
+    fi    
+}
 
 
 function v_install {
@@ -138,8 +162,7 @@ function v_install {
         pushd $DIR_CODE_INT
         sudo rm -rf $DIR_CODE_INT/v
         if [[ "$OSTYPE" == "linux-gnu"* ]]; then 
-            sudo apt update
-            sudo apt install libgc-dev gcc make -y
+            os_package_install "libgc-dev gcc make"
         elif [[ "$OSTYPE" == "darwin"* ]]; then
             brew install bdw-gc
         else
@@ -159,7 +182,7 @@ function v_install {
     fi
     popd "$@" > /dev/null
 
-    if ! [ -x "$(command -v v)" ]; thenat
+    if ! [ -x "$(command -v v)" ]; then
     echo 'vlang is not installed.' >&2
     exit 1
     fi
@@ -308,6 +331,12 @@ fi
 
 if ! [ -x "$(command -v v)" ]; then
   v_install
+fi
+
+if [[ -z "${ANSIBLE}" ]]; then
+    echo
+else
+    ansible_install
 fi
 
 # pushd $DIR_CT

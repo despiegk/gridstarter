@@ -1,0 +1,5 @@
+example.com.           IN SOA dns.example.com. myuser.example.com. 2019042917 7200 3600 1209600 3600
+shibuya.example.com.   IN A 12.34.5.61
+tokyo.example.com.     IN A 12.34.5.62
+ebisu.example.com.     IN A 12.34.5.63
+shinjuku.example.com.  IN A 12.34.5.64
