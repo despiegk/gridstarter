@@ -6,21 +6,26 @@ docker run \
     -v /var/data:/data \
     --name "mailserver" \
     -h "mail.lbndao.com" \
+    -e "HTTPS=OFF" \
+    -e "HTTP_PORT=8080" \
+    -e "HTTPS_PORT=8081" \
     -t analogic/poste.io
 
 
-ufw allow 22
-ufw allow 25
-ufw allow 80
+# ufw allow 22
+# ufw allow 25
+# ufw allow 80
+# ufw allow 143
+# ufw allow 443
+# ufw allow 465
+# ufw allow 587
+# ufw allow 993
+# ufw allow 995
+
+
 # ufw allow 110
-ufw allow 143
-ufw allow 443
-ufw allow 465
-ufw allow 587
-ufw allow 993
-ufw allow 995
 # ufw allow 4190
-ufw enable
+# ufw enable
 
 # 25	SMTP - mostly processing incoming mails
 # 80	HTTP - redirect to https (see options) and authentication for Let's encrypt service

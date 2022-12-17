@@ -35,10 +35,14 @@ ssh -A root@$ME "export RESET=1 && curl https://raw.githubusercontent.com/despie
 to install
 
 ```bash
-export ANSIBLE=1
-#now do the installer as mentioned above e.g.
+
+export ANSIBLE=1 
+curl https://raw.githubusercontent.com/despiegk/gridstarter/main/scripts/install.sh > /tmp/install.sh && bash /tmp/install.sh
+
+
+#or remote
 export ME='195.192.213.92'
-ssh -A root@$ME "curl https://raw.githubusercontent.com/despiegk/gridstarter/main/scripts/install.sh > /tmp/install.sh && bash -x /tmp/install.sh"
+ssh -A root@$ME "export ANSIBLE=1 && curl https://raw.githubusercontent.com/despiegk/gridstarter/main/scripts/install.sh > /tmp/install.sh && bash -x /tmp/install.sh"
 ```
 
 

@@ -1,0 +1,39 @@
+
+
+
+
+
+{
+    email kristof@incubaid.com
+    # acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+    # debug
+}
+
+files.play.refit.earth {
+	file_server browse
+}
+
+office.play.refit.earth {
+    reverse_proxy http://localhost:8008
+}
+
+groupoffice.play.refit.earth {
+redir https://mail.lbndao.com
+}
+
+mail.lbndao.com {
+    header X-Forwarded-Proto "https"
+    header X-Forwarded-Host "mail.lbndao.com"
+    reverse_proxy http://localhost:7000
+}
+
+# mail.play.refit.earth {
+#     reverse_proxy http://localhost:7000
+# }
+
+webmail.play.refit.earth {
+    reverse_proxy http://localhost:8080
+}
+
+
+
