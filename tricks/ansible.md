@@ -4,10 +4,7 @@
 
 
 ```
-#source the installer which was used to install a system
-source /tmp/install.sh
-#has the code for ansible install
-ansible_install
+see home of this repo
 ```
 
 ### To Activate
