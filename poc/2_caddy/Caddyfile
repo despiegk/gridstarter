@@ -35,5 +35,23 @@ webmail.play.refit.earth {
     reverse_proxy http://localhost:8080
 }
 
+jitsi.play.refit.earth {
+    reverse_proxy 127.0.0.1:9009
+    @websockets {
+        header Connection *Upgrade*
+        header Upgrade websocket
+    }
+    reverse_proxy @websockets 127.0.0.1:9009
+}
+
+
+meet.play.refit.earth {
+    reverse_proxy 127.0.0.1:9009
+    @websockets {
+        header Connection *Upgrade*
+        header Upgrade websocket
+    }
+    reverse_proxy @websockets 127.0.0.1:9009
+}
 
 

@@ -13,6 +13,8 @@ mail    IN A    195.192.213.92
 files    IN A    195.192.213.92
 groupoffice  IN A    195.192.213.92
 webmail    IN A    195.192.213.92
+meet    IN A    195.192.213.92
+jitsi    IN A    195.192.213.92
 
 
 
