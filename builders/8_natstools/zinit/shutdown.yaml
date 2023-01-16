@@ -1,0 +1,4 @@
+exec: zinit shutdown
+oneshot: true
+after:
+  - copy
