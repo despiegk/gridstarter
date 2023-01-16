@@ -1,4 +1,7 @@
 #!/bin/sh
+
+
+
 set -e
 
 if test -f "/env.sh"; then
@@ -9,16 +12,13 @@ if test -f "env.sh"; then
 fi
 
 
-export PS1="${NAME}: "
+# redis-server /etc/redis.conf  --daemonize yes
 
-# mkdir -p /myhost/alpine/${NAME}/bin
-# cp /app/bin/* /myhost/alpine/${NAME}/bin/
+export PS1="${NAME}: "
 
 # export PATH=/root/.nsccli/bin:$PATH
 
-# sh
-
-echo " ** COPY DONE"
+sh
 
 
 

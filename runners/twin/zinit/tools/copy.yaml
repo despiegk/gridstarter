@@ -1,0 +1,2 @@
+exec: /bin/sh /scripts/tools_copy.sh
+oneshot: true

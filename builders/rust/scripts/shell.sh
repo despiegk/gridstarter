@@ -1,6 +1,11 @@
 #!/bin/sh
 
-cp /conf.sh .
+if test -f "/env.sh"; then
+    source /env.sh
+fi
+if test -f "env.sh"; then
+    source env.sh
+fi
 
 set -e
 

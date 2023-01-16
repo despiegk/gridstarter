@@ -1,4 +1,4 @@
-FROM base
+FROM basezinit
 
 RUN rm  -rf /tmp/* /var/cache/apk/*
 RUN apk add --no-cache git musl-dev

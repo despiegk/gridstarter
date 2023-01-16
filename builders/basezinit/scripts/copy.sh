@@ -11,8 +11,8 @@ fi
 
 export PS1="${NAME}: "
 
-# mkdir -p /myhost/alpine/${NAME}/bin
-# cp /app/bin/* /myhost/alpine/${NAME}/bin/
+# mkdir -p /myhost/alpine/nsc/bin
+# cp /bin/nsc /myhost/alpine/nsc/bin/nsc
 
 # export PATH=/root/.nsccli/bin:$PATH
 

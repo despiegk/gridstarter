@@ -1,12 +1,6 @@
 set -e
 
-if test -f "/conf.sh"; then
-    source /conf.sh
-fi
-
-if test -f "conf.sh"; then
-    source conf.sh
-fi
+source conf.sh
 
 if [[ -z "${CLBRANCH}" ]]; then 
     # echo " - DEFAULT BRANCH FOR CRYSTALLIB SET"

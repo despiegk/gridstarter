@@ -7,6 +7,7 @@ networks:
       driver: default
 services:
   nats-1:
+    container_name: nats
     command:
       - "-js"
       - "-c"
@@ -22,13 +23,28 @@ services:
       - ./cfg:/cfg
       - /tmp/data:/data  
   tools:
-    image: "base:latest"
+    container_name: tools
+    hostname: tools
+    image: "basezinitredis:latest"
     networks:
       - main    
     volumes:
+      - ./zinit/tools:/etc/zinit   #this copies in all parts we need for container
       - ./scripts:/scripts
       - ~/myhost/alpine:/source        
+  vlang:
+    container_name: vlang
+    hostname: vlang
+    image: "basezinitredis:latest"
+    networks:
+      - main    
+    volumes:
+      - ./zinit/tools:/etc/zinit   #this copies in all parts we need for container
+      - ./scripts:/scripts
+      - ~/myhost/alpine:/source          
   tarantool1:
+    container_name: tarantool
+    hostname: tarantool
     image: tarantool/tarantool:latest
     # environment:
     #   TARANTOOL_REPLICATION: "tarantool1,tarantool2"

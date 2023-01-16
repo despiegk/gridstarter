@@ -1,7 +1,13 @@
 #!/bin/sh
 set -e
 
-source env.sh
+if test -f "/env.sh"; then
+    source /env.sh
+fi
+if test -f "env.sh"; then
+    source env.sh
+fi
+
 
 export PS1="${NAME}: "
 

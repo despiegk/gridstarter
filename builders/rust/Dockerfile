@@ -1,4 +1,4 @@
-FROM base
+FROM basezinit
 
 RUN rm  -rf /tmp/* /var/cache/apk/*
 
