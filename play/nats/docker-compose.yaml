@@ -1,0 +1,55 @@
+
+networks:
+  main:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.255.0/24
+      driver: default
+services:
+  nats-1:
+    command:
+      - "-js"
+      - "-c"
+      - "/cfg/main.cfg"
+    image: "nats:latest"
+    networks:
+      - main
+    ports:
+      - "14222:4222"
+      - "16222:6222"
+      - "18222:8222"
+    volumes:
+      - ./cfg/A:/cfg
+      - ./data/A:/data      
+  nats-2:
+    command:
+      - "-js"
+      - "-c"
+      - "/cfg/main.cfg"
+    image: "nats:latest"
+    networks:
+      - main
+    ports:
+      - "24222:4222"
+      - "26222:6222"
+      - "28222:8222"
+    volumes:
+      - ./cfg/B:/cfg    
+      - ./data/B:/data        
+  nats-3:
+    command:
+      - "-js"
+      - "-c"
+      - "/cfg/main.cfg"
+    image: "nats:latest"
+    networks:
+      - main
+    ports:
+      - "34222:4222"
+      - "36222:6222"
+      - "38222:8222"
+    volumes:
+      - ./cfg/C:/cfg
+      - ./data/C:/data      
+version: "3.7"

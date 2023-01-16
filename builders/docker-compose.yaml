@@ -1,0 +1,26 @@
+version: '3'
+services:
+  # sonic:
+  #   build: sonic
+  #   stdin_open: true
+  #   tty: true       
+  base:
+    build: base
+    stdin_open: true
+    tty: true       
+  # python:
+  #   build: python
+  #   stdin_open: true
+  #   tty: true       
+  golang:
+    build: golang
+    stdin_open: true
+    tty: true       
+    depends_on: ["base"]
+  # production:
+  #   build: production
+  #   stdin_open: true
+  #   tty: true       
+  #   depends_on: ["base","python"]    
+
+   
