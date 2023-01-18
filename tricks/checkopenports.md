@@ -1,1 +1,0 @@
-netstat -tulpn | grep LISTEN

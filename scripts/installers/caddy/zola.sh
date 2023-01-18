@@ -1,1 +1,0 @@
-snap install --edge zola

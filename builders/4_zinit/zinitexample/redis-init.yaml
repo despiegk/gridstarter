@@ -1,2 +1,0 @@
-exec: sh -c "echo 'prepare db files for redis!'"
-oneshot: true

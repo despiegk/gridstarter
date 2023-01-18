@@ -1,2 +1,0 @@
-exec: /bin/sh /scripts/copy.sh
-oneshot: true
